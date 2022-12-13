@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 lengthall=20
+=======
+lengthall = 20
+chancesOfRandom=[3,9,17,25,33,41,49,57,65,73]           # шансы: 3,6,8,8,8,8,8,8,8,8
+>>>>>>> fd67918 (с фиксированным рандомом)
 from random import randint
 
 
@@ -72,6 +77,7 @@ def find_word(currLength):
     while currLength!=0:
         if currLength >= 10:
 <<<<<<< HEAD
+<<<<<<< HEAD
             i = randint(1,10)-1
         else:
             i = randint(1,currLength)-1
@@ -84,10 +90,25 @@ def find_word(currLength):
             bool[indexForDict] = 1
 =======
             i = randint(1, 10) - 1
+=======
+            bufferIndex = randint(1, 73)
+            i = 0
+            if bufferIndex in range(1, 4):
+                pass
+            else:
+                while i < 9 and bufferIndex > chancesOfRandom[i]:
+                    i += 1
+>>>>>>> fd67918 (с фиксированным рандомом)
             clearing(i)
 
         else:
-            i = randint(1, currLength) - 1
+            bufferIndex = randint(1, chancesOfRandom[currLength - 1])
+            i = 0
+            if bufferIndex in range(1, 4):
+                pass
+            else:
+                while i < 9 and bufferIndex > chancesOfRandom[i]:
+                    i += 1
             clearing(i)
 
         indexForDict = randint(LEFT_BORDERS[i], RIGHT_BORDERS[i])
@@ -212,7 +233,6 @@ while lengthall>0:
         lengthall-=2
 print('You are winner sun')        
     
-
 
 
 
