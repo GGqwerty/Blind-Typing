@@ -32,9 +32,11 @@ if language:
     dict = dict.split(' ')
     LEFT_BORDERS = [0, 52, 104, 304, 504, 704, 904, 1104, 1304, 1504]
     RIGHT_BORDERS = [51, 103, 303, 503, 703, 903, 1103, 1303, 1503, 1703]
-    bool = [0] * 1704
+    howMuchElements = 1704
+    bool = [0] * howMuchElements
     f.close()
 else:
+<<<<<<< HEAD
     #   f = open('      Dictionary FOR RUSSIAN   .txt')
     # dict = f.readline()
     # dict = dict.split(' ')
@@ -45,10 +47,31 @@ else:
 
 
 currWord = []
+=======
+    f = open('DictionaryRUS.txt')
+    dict = f.readline()
+    dict = dict.split(' ')
+    LEFT_BORDERS = [0, 66, 116, 316, 516, 716, 916, 1116, 1316, 1516]
+    RIGHT_BORDERS = [65, 115, 315, 515, 715, 915, 1115, 1315, 1515, 1715]
+    howMuchElements = 1716
+    bool = [0] * howMuchElements
+    f.close()
+
+currWord = []
+
+
+def clearing(index):
+    if bool[LEFT_BORDERS[index]:RIGHT_BORDERS[index] + 1].count(0) == 0:
+        for j in range(LEFT_BORDERS[index], RIGHT_BORDERS[index] + 1):
+            bool[j] = 0
+
+
+>>>>>>> c61f094 (с чисткой)
 def find_word(currLength):
     currWord=[]
     while currLength!=0:
         if currLength >= 10:
+<<<<<<< HEAD
             i = randint(1,10)-1
         else:
             i = randint(1,currLength)-1
@@ -59,6 +82,25 @@ def find_word(currLength):
             currWord.append(dict[indexForDict])
             currLength-=i+1
             bool[indexForDict] = 1
+=======
+            i = randint(1, 10) - 1
+            clearing(i)
+
+        else:
+            i = randint(1, currLength) - 1
+            clearing(i)
+
+        indexForDict = randint(LEFT_BORDERS[i], RIGHT_BORDERS[i])
+        while dict[indexForDict] == 1:
+            indexForDict = randint(LEFT_BORDERS[i], RIGHT_BORDERS[i])
+        # if bool[indexForDict]:
+        #    pass
+        # else:
+        currWord.append(dict[indexForDict])
+        currLength -= i + 1
+        # if indexForDict != 0:          // это старое правило для единиц; отныне единицы чищатся, как и другие
+        bool[indexForDict] = 1
+>>>>>>> c61f094 (с чисткой)
     return currWord
 
 def word_for_length(theLength):
@@ -99,13 +141,13 @@ while lengthall>0:
     str2 = input().split(' ')
     flagYbav = True
     Flag = False
-    
+
     if len(str1) > len(str2):
         Flag = True
         flagYbav = False
 
     for i in range(len(str1)):
-        flagDlinnee=False
+        flagDlinnee = False
         buf = []
 >>>>>>> a98e2d0 (testy)
         for j in range(len(str1[i])):
@@ -139,14 +181,10 @@ while lengthall>0:
                         lengthall += 1
                         flagYbav = False
             if len(str1[i]) < len(str2[i]):
-                flagDlinnee=True
+                flagDlinnee = True
                 Flag = True
-                flagYbav=False
-                
+                flagYbav = False
 
-
-
-            
         s = ''
         k = []
 >>>>>>> a98e2d0 (testy)
@@ -163,7 +201,7 @@ while lengthall>0:
             strarray=strarray+k
 =======
             s = str1[i]
-        if (len(s) == len(str1[i])) and (not(flagDlinnee)):
+        if (len(s) == len(str1[i])) and (not (flagDlinnee)):
             k = find_word(len(str1[i]))
             strarray = strarray + k
 >>>>>>> a98e2d0 (testy)
@@ -215,78 +253,6 @@ print('You are winner sun')
 
 
 
-"""
-from random import randint
-
-
-print('Please enter the language that you want to test blind testing in:')
-print('English: 1')
-print('Russian: 0')
-print('')
-print('Пожалуйста, введите язык, на котором вы хотите опробовать печать вслепую: ')
-print('Английский: 1')
-print('Русский: 0')
-print('')
-
-valid=False
-while not valid:
-    try:
-        language = int(input())
-        if (language!=1) and (language!=0):
-            raise ZeroDivisionError
-        else:
-            valid = True
-    except:
-        print('Invalid input: try again!')
-        print('Неверный ввод: попробуйте снова!')
-
-
-if language:
-    f = open('Dictionary.txt')
-    dict = f.readline()
-    dict = dict.split(' ')
-    LEFT_BORDERS = [0, 52, 104, 304, 504, 704, 904, 1104, 1304, 1504]
-    RIGHT_BORDERS = [51, 103, 303, 503, 703, 903, 1103, 1303, 1503, 1703]
-    bool = [0] * 1704
-    f.close()
-else:
-    #   f = open('      Dictionary FOR RUSSIAN   .txt')
-    # dict = f.readline()
-    # dict = dict.split(' ')
-    LEFT_BORDERS = [0,    66,     132,332,532,732,932,1132,1332,1532]
-    RIGHT_BORDERS = [65,    131,    331,531,731,931,1131,1331,1531,1731]
-    bool = [0] * 1732
-    # f.close()
-
-
-currWord = []
-def find_word(currLength):
-    while currLength!=0:
-        if currLength >= 10:
-            i = randint(1,10)-1
-        else:
-            i = randint(1,currLength)-1
-        indexForDict = randint(LEFT_BORDERS[i],RIGHT_BORDERS[i])
-        if bool[indexForDict]:
-            pass
-        else:
-            currWord.append(dict[indexForDict])
-            currLength-=i+1
-            bool[indexForDict] = 1
-    return currWord
-
-def word_for_length(theLength):
-    indexForDict = randint(LEFT_BORDERS[theLength],RIGHT_BORDERS[theLength])
-    while bool[indexForDict]:
-        indexForDict = randint(LEFT_BORDERS[theLength], RIGHT_BORDERS[theLength])
-    oneWord = dict[indexForDict]
-    bool[indexForDict] = 1
-    return oneWord
-
-
-# INSERT THE LENGTH HERE
-find_word(20)
-print(currWord)"""
 
 
 
