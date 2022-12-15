@@ -83,6 +83,7 @@ while lengthall>0:
     print()
         
 
+<<<<<<< HEAD
     strarray=[]
     str2=input().split(' ')
     flagYbav=True
@@ -93,6 +94,20 @@ while lengthall>0:
 
     for i in range(len(str1)):    
         buf=[]
+=======
+    strarray = []
+    str2 = input().split(' ')
+    flagYbav = True
+    Flag = False
+    
+    if len(str1) > len(str2):
+        Flag = True
+        flagYbav = False
+
+    for i in range(len(str1)):
+        flagDlinnee=False
+        buf = []
+>>>>>>> a98e2d0 (testy)
         for j in range(len(str1[i])):
             buf.append(1)
         if i>len(str2)-1:
@@ -109,6 +124,7 @@ while lengthall>0:
                     lengthall+=1
                     flagYbav=False
                 else:
+<<<<<<< HEAD
                     if str1[i][j]!=str2[i][j]:
                         Flag=True
                         buf[j]+=1
@@ -116,16 +132,41 @@ while lengthall>0:
                         flagYbav=False
         s=''
         k=[]
+=======
+                    if str1[i][j] != str2[i][j]:
+                        Flag = True
+                        buf[j] += 1
+                        lengthall += 1
+                        flagYbav = False
+            if len(str1[i]) < len(str2[i]):
+                flagDlinnee=True
+                Flag = True
+                flagYbav=False
+                
+
+
+
+            
+        s = ''
+        k = []
+>>>>>>> a98e2d0 (testy)
         if Flag:
             for j in range(len(str1[i])):
                 
                 for g in range(buf[j]):
                     s=s+str1[i][j]
         else:
+<<<<<<< HEAD
             s=str1[i]
         if len(s)==len(str1[i]):
             k=find_word(len(str1[i]))
             strarray=strarray+k
+=======
+            s = str1[i]
+        if (len(s) == len(str1[i])) and (not(flagDlinnee)):
+            k = find_word(len(str1[i]))
+            strarray = strarray + k
+>>>>>>> a98e2d0 (testy)
         else:
             strarray.append(s)
     print()
