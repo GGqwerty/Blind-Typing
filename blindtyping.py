@@ -77,9 +77,6 @@ def find_word(currLength):
         indexForDict = randint(LEFT_BORDERS[i], RIGHT_BORDERS[i])
         while dict[indexForDict] == 1:
             indexForDict = randint(LEFT_BORDERS[i], RIGHT_BORDERS[i])
-        # if bool[indexForDict]:
-        #    pass
-        # else:
         currWord.append(dict[indexForDict])
         currLength -= i + 1
         # if indexForDict != 0:          // это старое правило для единиц; отныне единицы чищатся, как и другие
@@ -137,17 +134,30 @@ while lengthall<120:
         else:
             for j in range(len(str1[i])):
                 if j > len(str2[i]) - 1:
+                    try:
+                        bool[dict.index(str1[i])]=0
+                    except:
+                        pass
                     Flag = True
                     buf[j] += mnoj-1
                     lengthall += mnoj-1
                     flagYbav = False
                 else:
                     if str1[i][j] != str2[i][j]:
+                        try:
+                            bool[dict.index(str1[i])]=0
+                        except:
+                            pass
                         Flag = True
                         buf[j] += mnoj-1
                         lengthall += mnoj-1
                         flagYbav = False
+                        
             if len(str1[i]) < len(str2[i]):
+                try:
+                    bool[dict.index(str1[i])]=0
+                except:
+                    pass
                 flagDlinnee = True
                 Flag = True
                 flagYbav = False
