@@ -1,11 +1,6 @@
-<<<<<<< HEAD
-lengthall=20
-=======
-lengthall = 20
+lengthall = 4
 chancesOfRandom=[3,9,17,25,33,41,49,57,65,73]           # шансы: 3,6,8,8,8,8,8,8,8,8
->>>>>>> fd67918 (с фиксированным рандомом)
 from random import randint
-
 
 print('Please enter the language that you want to test blind testing in:')
 print('English: 1')
@@ -16,11 +11,11 @@ print('Английский: 1')
 print('Русский: 0')
 print('')
 
-valid=False
+valid = False
 while not valid:
     try:
         language = int(input())
-        if (language!=1) and (language!=0):
+        if (language != 1) and (language != 0):
             raise ZeroDivisionError
         else:
             valid = True
@@ -28,9 +23,6 @@ while not valid:
         print('Invalid input: try again!')
         print('Неверный ввод: попробуйте снова!')
 
-
-# 1 - это англ, 0 - это русский
-language = 1
 if language:
     f = open('Dictionary.txt')
     dict = f.readline()
@@ -41,18 +33,6 @@ if language:
     bool = [0] * howMuchElements
     f.close()
 else:
-<<<<<<< HEAD
-    #   f = open('      Dictionary FOR RUSSIAN   .txt')
-    # dict = f.readline()
-    # dict = dict.split(' ')
-    LEFT_BORDERS = [0,    66,     132,332,532,732,932,1132,1332,1532]
-    RIGHT_BORDERS = [65,    131,    331,531,731,931,1131,1331,1531,1731]
-    bool = [0] * 1732
-    # f.close()
-
-
-currWord = []
-=======
     f = open('DictionaryRUS.txt')
     dict = f.readline()
     dict = dict.split(' ')
@@ -71,26 +51,10 @@ def clearing(index):
             bool[j] = 0
 
 
->>>>>>> c61f094 (с чисткой)
 def find_word(currLength):
-    currWord=[]
-    while currLength!=0:
+    currWord = []
+    while currLength != 0:
         if currLength >= 10:
-<<<<<<< HEAD
-<<<<<<< HEAD
-            i = randint(1,10)-1
-        else:
-            i = randint(1,currLength)-1
-        indexForDict = randint(LEFT_BORDERS[i],RIGHT_BORDERS[i])
-        if bool[indexForDict]:
-            pass
-        else:
-            currWord.append(dict[indexForDict])
-            currLength-=i+1
-            bool[indexForDict] = 1
-=======
-            i = randint(1, 10) - 1
-=======
             bufferIndex = randint(1, 73)
             i = 0
             if bufferIndex in range(1, 4):
@@ -98,7 +62,6 @@ def find_word(currLength):
             else:
                 while i < 9 and bufferIndex > chancesOfRandom[i]:
                     i += 1
->>>>>>> fd67918 (с фиксированным рандомом)
             clearing(i)
 
         else:
@@ -121,45 +84,38 @@ def find_word(currLength):
         currLength -= i + 1
         # if indexForDict != 0:          // это старое правило для единиц; отныне единицы чищатся, как и другие
         bool[indexForDict] = 1
->>>>>>> c61f094 (с чисткой)
     return currWord
 
+
 def word_for_length(theLength):
-    theLength-=1
-    indexForDict = randint(LEFT_BORDERS[theLength],RIGHT_BORDERS[theLength])
+    theLength -= 1
+    indexForDict = randint(LEFT_BORDERS[theLength], RIGHT_BORDERS[theLength])
     while bool[indexForDict]:
         indexForDict = randint(LEFT_BORDERS[theLength], RIGHT_BORDERS[theLength])
     oneWord = dict[indexForDict]
     bool[indexForDict] = 1
     return oneWord
+
+
 """"""
-Flag=False
+Flag = False
+mnoj=2
+while lengthall<120:
 
-while lengthall>0:
-
+    
+    
     if not (Flag):
-        str1=find_word(lengthall)
+        str1 = find_word(lengthall)
     else:
-        str1=strarray
+        str1 = strarray
     for i in str1:
-        print(i,end=' ')
+        print(i, end=' ')
     print()
-        
 
-<<<<<<< HEAD
-    strarray=[]
-    str2=input().split(' ')
-    flagYbav=True
-    Flag=False
-    if len(str1)>len(str2):
-        Flag=True
-        flagYbav=False
-
-    for i in range(len(str1)):    
-        buf=[]
-=======
     strarray = []
     str2 = input().split(' ')
+    if len(str2)==1 and str2[0]=='13':
+        break
     flagYbav = True
     Flag = False
 
@@ -170,36 +126,26 @@ while lengthall>0:
     for i in range(len(str1)):
         flagDlinnee = False
         buf = []
->>>>>>> a98e2d0 (testy)
         for j in range(len(str1[i])):
             buf.append(1)
-        if i>len(str2)-1:
+        if i > len(str2) - 1:
             for j in range(len(str1[i])):
-                buf[j]+=1
-                lengthall+=1
+                buf[j] += mnoj-1
+                lengthall += mnoj-1
 
 
         else:
             for j in range(len(str1[i])):
-                if j>len(str2[i])-1:
-                    Flag=True
-                    buf[j]+=1
-                    lengthall+=1
-                    flagYbav=False
+                if j > len(str2[i]) - 1:
+                    Flag = True
+                    buf[j] += mnoj-1
+                    lengthall += mnoj-1
+                    flagYbav = False
                 else:
-<<<<<<< HEAD
-                    if str1[i][j]!=str2[i][j]:
-                        Flag=True
-                        buf[j]+=1
-                        lengthall+=1
-                        flagYbav=False
-        s=''
-        k=[]
-=======
                     if str1[i][j] != str2[i][j]:
                         Flag = True
-                        buf[j] += 1
-                        lengthall += 1
+                        buf[j] += mnoj-1
+                        lengthall += mnoj-1
                         flagYbav = False
             if len(str1[i]) < len(str2[i]):
                 flagDlinnee = True
@@ -208,71 +154,36 @@ while lengthall>0:
 
         s = ''
         k = []
->>>>>>> a98e2d0 (testy)
         if Flag:
             for j in range(len(str1[i])):
-                
+
                 for g in range(buf[j]):
-                    s=s+str1[i][j]
+                    s = s + str1[i][j]
         else:
-<<<<<<< HEAD
-            s=str1[i]
-        if len(s)==len(str1[i]):
-            k=find_word(len(str1[i]))
-            strarray=strarray+k
-=======
             s = str1[i]
         if (len(s) == len(str1[i])) and (not (flagDlinnee)):
             k = find_word(len(str1[i]))
             strarray = strarray + k
->>>>>>> a98e2d0 (testy)
         else:
             strarray.append(s)
     print()
     if flagYbav:
-        lengthall-=2
-print('You are winner sun')        
-    
+        lengthall -= 2
+        
+    if lengthall<1:
+        mnoj=mnoj*2
+        lengthall=4
+        
+if language:
+    if lengthall >120:
+        print('Unfortunately, you are loser, sun.')
+    else:
+        print('Thank you for playing!')
+else:
+    if lengthall > 120:
+        print('К сожалению, вы проиграли.')
+    else:
+        print('Спасибо за игру!')
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+input()
 
