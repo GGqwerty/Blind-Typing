@@ -30,7 +30,7 @@ if language:
     LEFT_BORDERS = [0, 52, 104, 304, 504, 704, 904, 1104, 1304, 1504]
     RIGHT_BORDERS = [51, 103, 303, 503, 703, 903, 1103, 1303, 1503, 1703]
     howMuchElements = 1704
-    bool = [0] * howMuchElements
+    TheBool = [0] * howMuchElements
     f.close()
 else:
     f = open('DictionaryRUS.txt')
@@ -39,16 +39,16 @@ else:
     LEFT_BORDERS = [0, 66, 116, 316, 516, 716, 916, 1116, 1316, 1516]
     RIGHT_BORDERS = [65, 115, 315, 515, 715, 915, 1115, 1315, 1515, 1715]
     howMuchElements = 1716
-    bool = [0] * howMuchElements
+    TheBool = [0] * howMuchElements
     f.close()
 
 currWord = []
 
 
 def clearing(index):
-    if bool[LEFT_BORDERS[index]:RIGHT_BORDERS[index] + 1].count(0) == 0:
+    if TheBool[LEFT_BORDERS[index]:RIGHT_BORDERS[index] + 1].count(0) == 0:
         for j in range(LEFT_BORDERS[index], RIGHT_BORDERS[index] + 1):
-            bool[j] = 0
+            TheBool[j] = 0
 
 
 def find_word(currLength):
@@ -80,17 +80,17 @@ def find_word(currLength):
         currWord.append(dict[indexForDict])
         currLength -= i + 1
         # if indexForDict != 0:          // это старое правило для единиц; отныне единицы чищатся, как и другие
-        bool[indexForDict] = 1
+        TheBool[indexForDict] = 1
     return currWord
 
 
 def word_for_length(theLength):
     theLength -= 1
     indexForDict = randint(LEFT_BORDERS[theLength], RIGHT_BORDERS[theLength])
-    while bool[indexForDict]:
+    while TheBool[indexForDict]:
         indexForDict = randint(LEFT_BORDERS[theLength], RIGHT_BORDERS[theLength])
     oneWord = dict[indexForDict]
-    bool[indexForDict] = 1
+    TheBool[indexForDict] = 1
     return oneWord
 
 
@@ -135,7 +135,7 @@ while lengthall<120:
             for j in range(len(str1[i])):
                 if j > len(str2[i]) - 1:
                     try:
-                        bool[dict.index(str1[i])]=0
+                        TheBool[dict.index(str1[i])]=0
                     except:
                         pass
                     Flag = True
@@ -145,7 +145,7 @@ while lengthall<120:
                 else:
                     if str1[i][j] != str2[i][j]:
                         try:
-                            bool[dict.index(str1[i])]=0
+                            TheBool[dict.index(str1[i])]=0
                         except:
                             pass
                         Flag = True
@@ -155,7 +155,7 @@ while lengthall<120:
                         
             if len(str1[i]) < len(str2[i]):
                 try:
-                    bool[dict.index(str1[i])]=0
+                    TheBool[dict.index(str1[i])]=0
                 except:
                     pass
                 flagDlinnee = True
