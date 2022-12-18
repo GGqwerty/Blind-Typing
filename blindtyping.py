@@ -12,10 +12,10 @@ print('Английский: 1')
 print('Русский: 0')
 print('-------------------------------------------------------------------------')
 
-valid = False
+valid = False                           # try except для ввода
 while not valid:
     try:
-        language = int(input())
+        language = int(input())                     # ввод в переменную language языка
         if (language != 1) and (language != 0):
             raise ZeroDivisionError
         else:
@@ -24,16 +24,17 @@ while not valid:
         print('Invalid input: try again!')
         print('Неверный ввод: попробуйте снова!')
 
-if language:
-    f = open('Dictionary.txt')
-    dict = f.readline()
-    dict = dict.split(' ')
-    LEFT_BORDERS = [0, 52, 104, 304, 504, 704, 904, 1104, 1304, 1504]
+if language:                  # обработка введенного языка: language = 1 - это англ
+    f = open('Dictionary.txt')          # открывается словарь для английских слов
+    dict = f.readline()                 # строка записывается в переменную dict
+    dict = dict.split(' ')              # dict отныне массив, где каждый элемент - это слово
+    LEFT_BORDERS = [0, 52, 104, 304, 504, 704, 904, 1104, 1304, 1504]       # левые и правые границы
     RIGHT_BORDERS = [51, 103, 303, 503, 703, 903, 1103, 1303, 1503, 1703]
-    howMuchElements = 1704
-    TheBool = [0] * howMuchElements
+    howMuchElements = 1704              # кол-во элементов в массиве
+    TheBool = [0] * howMuchElements     # булевый массив; в нем изначально все 0
     f.close()
-else:
+
+else:                         # по аналогии обрабатывается русский язык
     f = open('DictionaryRUS.txt')
     dict = f.readline()
     dict = dict.split(' ')
@@ -43,8 +44,11 @@ else:
     TheBool = [0] * howMuchElements
     f.close()
 
-currWord = []
-if language:
+
+
+
+
+if language:            # вывод условия выхода из тренажера
     print()
     print('--------------------------------')
     print('In order to exit please type: 13')
@@ -57,59 +61,70 @@ else:
     print('------------------------------------')
     print()
 
-def clearing(index):
+
+
+def clearing(index):        # функция очистки диапазона элементов длины index+1
+    # проверка диапазона для данного индекса на наличие нулей
     if TheBool[LEFT_BORDERS[index]:RIGHT_BORDERS[index] + 1].count(0) == 0:
-        for j in range(LEFT_BORDERS[index], RIGHT_BORDERS[index] + 1):
+        for j in range(LEFT_BORDERS[index], RIGHT_BORDERS[index] + 1):      # range(0,4) = (0,1,2,3)
             TheBool[j] = 0
 
 
-def find_word(currLength):
-    currWord = []
-    while currLength != 0:
-        if currLength >= 10:
-            bufferIndex = randint(1, 73)
+def find_word(currLength):          # функция подбора массива длиной currLength
+    currWord=[]                     # инициализация пустого массива
+    while currLength!=0:            # подбор слов до тех пор, пока не будет достигнута длниа
+        if currLength >= 10:        # подбор слов длиной до 10
+            bufferIndex = randint(1, 73)        # подбор индекса с фиксированными шансами
+            i = 0                               # i = это длина - 1
+            if bufferIndex in range(1, 4):      # обработка длины 1
+                pass
+            else:
+                while i < 9 and bufferIndex > chancesOfRandom[i]:
+                    i += 1
+            clearing(i)                 # очистка диапазона булевского массива
+
+        else:                       # подбор слов длиной до текущей длины
+            bufferIndex = randint(1, chancesOfRandom[currLength - 1])       # аналогия с предыдущим
             i = 0
-            if bufferIndex in range(1, 4):
+            if bufferIndex in range(1, 4):                              # range (1,4) = (1,2,3)
                 pass
             else:
                 while i < 9 and bufferIndex > chancesOfRandom[i]:
                     i += 1
             clearing(i)
 
-        else:
-            bufferIndex = randint(1, chancesOfRandom[currLength - 1])
-            i = 0
-            if bufferIndex in range(1, 4):
-                pass
-            else:
-                while i < 9 and bufferIndex > chancesOfRandom[i]:
-                    i += 1
-            clearing(i)
+        indexForDict = randint(LEFT_BORDERS[i], RIGHT_BORDERS[i])       # поиск слова определенной длины
 
-        indexForDict = randint(LEFT_BORDERS[i], RIGHT_BORDERS[i])
-        while dict[indexForDict] == 1:
+        while TheBool[indexForDict] == 1:                               # ищем другое, если попалась 1
             indexForDict = randint(LEFT_BORDERS[i], RIGHT_BORDERS[i])
-        currWord.append(dict[indexForDict])
-        currLength -= i + 1
+
+        currWord.append(dict[indexForDict])                             # добавление в массив слова
+        currLength -= i + 1                     # currLength:= currLenght - (i+1)
         # if indexForDict != 0:          // это старое правило для единиц; отныне единицы чищатся, как и другие
-        TheBool[indexForDict] = 1
-    return currWord
+        TheBool[indexForDict] = 1           # говорим, что это слово больше брать нельзя
+    return currWord                             # возвращаем длину слова
 
 
-def word_for_length(theLength):
-    theLength -= 1
-    indexForDict = randint(LEFT_BORDERS[theLength], RIGHT_BORDERS[theLength])
+def word_for_length(theLength):         # функция подбора слова определенной длины (до 10)
+    theLength -= 1                      # так как нумерация с 0
+    clearing(theLength)                 # очистка длины
+    indexForDict = randint(LEFT_BORDERS[theLength], RIGHT_BORDERS[theLength])   # аналогия с предыдущей функцией
     while TheBool[indexForDict]:
         indexForDict = randint(LEFT_BORDERS[theLength], RIGHT_BORDERS[theLength])
-    oneWord = dict[indexForDict]
+    oneWord = dict[indexForDict]        # oneWord - полученное слово, его мы и возвращаем в функции
     TheBool[indexForDict] = 1
     return oneWord
 
 
-""""""
+"""
+Виталя, сделай подбор разбиения слов длиной больше 10 через find_word,
+а те, что меньше 10, через функцию word_for_length
+"""
+
 Flag = False
 mnoj=2
-while lengthall<120:
+str1=[]
+while lengthall+len(str1)-1<211:
 
     
     
@@ -209,15 +224,14 @@ while lengthall<120:
             print()
             
 if language:
-    if lengthall >120:
-        print('Unfortunately, you are loser, sun.')
+    if lengthall+len(str1)-1 >211:
+        print('Unfortunately, you have lost.')
     else:
         print('Thank you for playing!')
 else:
-    if lengthall > 120:
+    if lengthall+len(str1)-1 > 211:
         print('К сожалению, вы проиграли.')
     else:
         print('Спасибо за игру!')
 
 input()
-
