@@ -1,9 +1,10 @@
-lengthall = 20
 chancesOfRandom = [3, 9, 17, 25, 33, 41, 49, 57, 65, 73]  # шансы: 3,6,8,8,8,8,8,8,8,8
 from random import randint
+from time import sleep
 
 UserInGame=True
 while UserInGame:
+    lengthall = 20
     print('-------------------------------------------------------------------------')
     print('Please enter the language that you want to test blind testing in:')
     print('English: 1')
@@ -224,13 +225,15 @@ while UserInGame:
     if language:
         if lengthall + len(str1) - 1 > 211:
             print('Unfortunately, you have lost.')
+            print()
         else:
             print('Thank you for playing!')
             UserInGame=False
     else:
         if lengthall + len(str1) - 1 > 211:
             print('К сожалению, вы проиграли.')
+            print()
         else:
             print('Спасибо за игру!')
             UserInGame=False
-
+    sleep(2)
