@@ -1,15 +1,16 @@
-lengthall = 4
+lengthall = 20
 chancesOfRandom=[3,9,17,25,33,41,49,57,65,73]           # шансы: 3,6,8,8,8,8,8,8,8,8
 from random import randint
 
+print('-------------------------------------------------------------------------')
 print('Please enter the language that you want to test blind testing in:')
 print('English: 1')
 print('Russian: 0')
-print('')
+print('-------------------------------------------------------------------------')
 print('Пожалуйста, введите язык, на котором вы хотите опробовать печать вслепую: ')
 print('Английский: 1')
 print('Русский: 0')
-print('')
+print('-------------------------------------------------------------------------')
 
 valid = False
 while not valid:
@@ -43,7 +44,18 @@ else:
     f.close()
 
 currWord = []
-
+if language:
+    print()
+    print('--------------------------------')
+    print('In order to exit please type: 13')
+    print('--------------------------------')
+    print()
+else:
+    print()
+    print('------------------------------------')
+    print('Для выхода из программы напишите: 13')
+    print('------------------------------------')
+    print()
 
 def clearing(index):
     if TheBool[LEFT_BORDERS[index]:RIGHT_BORDERS[index] + 1].count(0) == 0:
@@ -182,8 +194,20 @@ while lengthall<120:
         
     if lengthall<1:
         mnoj=mnoj*2
-        lengthall=4
-        
+        lengthall=20
+        if language:
+            print()
+            print('-----------------------------')
+            print('You have reached a new level!')
+            print('-----------------------------')
+            print()
+        else:
+            print()
+            print('----------------------------')
+            print('Вы перешли на новый уровень!')
+            print('----------------------------')
+            print()
+            
 if language:
     if lengthall >120:
         print('Unfortunately, you are loser, sun.')
