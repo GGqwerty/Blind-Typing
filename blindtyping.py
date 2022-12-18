@@ -2,6 +2,60 @@ chancesOfRandom = [3, 9, 17, 25, 33, 41, 49, 57, 65, 73]  # шансы: 3,6,8,8,
 from random import randint
 from time import sleep
 
+
+def clearing(index):  # функция очистки диапазона элементов длины index+1
+    # проверка диапазона для данного индекса на наличие нулей
+    if TheBool[LEFT_BORDERS[index]:RIGHT_BORDERS[index] + 1].count(0) == 0:
+        for j in range(LEFT_BORDERS[index], RIGHT_BORDERS[index] + 1):  # range(0,4) = (0,1,2,3)
+            TheBool[j] = 0
+
+
+def find_word(currLength):  # функция подбора массива длиной currLength
+    currWord = []           # инициализация пустого массива
+    while currLength != 0:      # подбор слов до тех пор, пока не будет достигнута длниа
+        if currLength >= 10:    # подбор слов длиной до 10
+            bufferIndex = randint(1, 73)    # подбор индекса с фиксированными шансами
+            i = 0               # i = это длина - 1
+            if bufferIndex in range(1, 4):  # обработка длины 1
+                pass
+            else:
+                while i < 9 and bufferIndex > chancesOfRandom[i]:
+                    i += 1
+            clearing(i)  # очистка диапазона булевского массива
+
+        else:  # подбор слов длиной до текущей длины
+            bufferIndex = randint(1, chancesOfRandom[currLength - 1])  # аналогия с предыдущим
+            i = 0
+            if bufferIndex in range(1, 4):  # range (1,4) = (1,2,3)
+                pass
+            else:
+                while i < 9 and bufferIndex > chancesOfRandom[i]:
+                    i += 1
+            clearing(i)
+
+        indexForDict = randint(LEFT_BORDERS[i], RIGHT_BORDERS[i])  # поиск слова определенной длины
+
+        while TheBool[indexForDict] == 1:  # ищем другое, если попалась 1
+            indexForDict = randint(LEFT_BORDERS[i], RIGHT_BORDERS[i])
+
+        currWord.append(dict[indexForDict])  # добавление в массив слова
+        currLength -= i + 1  # currLength:= currLenght - (i+1)
+        # if indexForDict != 0:          // это старое правило для единиц; отныне единицы чищатся, как и другие
+        TheBool[indexForDict] = 1  # говорим, что это слово больше брать нельзя
+    return currWord  # возвращаем длину слова
+
+
+def word_for_length(theLength):  # функция подбора слова определенной длины (до 10)
+    theLength -= 1  # так как нумерация с 0
+    clearing(theLength)  # очистка длины
+    indexForDict = randint(LEFT_BORDERS[theLength], RIGHT_BORDERS[theLength])  # аналогия с предыдущей функцией
+    while TheBool[indexForDict]:
+        indexForDict = randint(LEFT_BORDERS[theLength], RIGHT_BORDERS[theLength])
+    oneWord = dict[indexForDict]  # oneWord - полученное слово, его мы и возвращаем в функции
+    TheBool[indexForDict] = 1
+    return oneWord
+
+
 UserInGame=True
 while UserInGame:
     lengthall = 20
@@ -60,64 +114,6 @@ while UserInGame:
         print('------------------------------------')
         print()
 
-
-    def clearing(index):    # функция очистки диапазона элементов длины index+1
-        # проверка диапазона для данного индекса на наличие нулей
-        if TheBool[LEFT_BORDERS[index]:RIGHT_BORDERS[index] + 1].count(0) == 0:
-            for j in range(LEFT_BORDERS[index], RIGHT_BORDERS[index] + 1):  # range(0,4) = (0,1,2,3)
-                TheBool[j] = 0
-
-
-    def find_word(currLength):      # функция подбора массива длиной currLength
-        currWord = []               # инициализация пустого массива
-        while currLength != 0:      # подбор слов до тех пор, пока не будет достигнута длниа
-            if currLength >= 10:    # подбор слов длиной до 10
-                bufferIndex = randint(1, 73)  # подбор индекса с фиксированными шансами
-                i = 0               # i = это длина - 1
-                if bufferIndex in range(1, 4):  # обработка длины 1
-                    pass
-                else:
-                    while i < 9 and bufferIndex > chancesOfRandom[i]:
-                        i += 1
-                clearing(i)         # очистка диапазона булевского массива
-
-            else:                   # подбор слов длиной до текущей длины
-                bufferIndex = randint(1, chancesOfRandom[currLength - 1])  # аналогия с предыдущим
-                i = 0
-                if bufferIndex in range(1, 4):  # range (1,4) = (1,2,3)
-                    pass
-                else:
-                    while i < 9 and bufferIndex > chancesOfRandom[i]:
-                        i += 1
-                clearing(i)
-
-            indexForDict = randint(LEFT_BORDERS[i], RIGHT_BORDERS[i])  # поиск слова определенной длины
-
-            while TheBool[indexForDict] == 1:  # ищем другое, если попалась 1
-                indexForDict = randint(LEFT_BORDERS[i], RIGHT_BORDERS[i])
-
-            currWord.append(dict[indexForDict])     # добавление в массив слова
-            currLength -= i + 1                     # currLength:= currLenght - (i+1)
-            # if indexForDict != 0:          // это старое правило для единиц; отныне единицы чищатся, как и другие
-            TheBool[indexForDict] = 1               # говорим, что это слово больше брать нельзя
-        return currWord  # возвращаем длину слова
-
-
-    def word_for_length(theLength):     # функция подбора слова определенной длины (до 10)
-        theLength -= 1                  # так как нумерация с 0
-        clearing(theLength)             # очистка длины
-        indexForDict = randint(LEFT_BORDERS[theLength], RIGHT_BORDERS[theLength])  # аналогия с предыдущей функцией
-        while TheBool[indexForDict]:
-            indexForDict = randint(LEFT_BORDERS[theLength], RIGHT_BORDERS[theLength])
-        oneWord = dict[indexForDict]    # oneWord - полученное слово, его мы и возвращаем в функции
-        TheBool[indexForDict] = 1
-        return oneWord
-
-
-    """
-    Виталя, сделай подбор разбиения слов длиной больше 10 через find_word,
-    а те, что меньше 10, через функцию word_for_length
-    """
 
     Flag = False
     mnoj = 2
@@ -198,8 +194,7 @@ while UserInGame:
                 if len(s) <= 10:
                     strarray.append(word_for_length(len(s)))
                 else:
-                    k = find_word(len(str1[i]))
-                    strarray = strarray + k
+                    strarray = strarray + find_word(len(str1[i]))
             else:
                 strarray.append(s)
         print()
