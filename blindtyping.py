@@ -199,8 +199,11 @@ while lengthall+len(str1)-1<211:
         else:
             s = str1[i]
         if (len(s) == len(str1[i])) and (not (flagDlinnee)):
-            k = find_word(len(str1[i]))
-            strarray = strarray + k
+            if len(s)<=10:
+                strarray.append(word_for_length(len(s)))
+            else:
+                k = find_word(len(str1[i]))
+                strarray = strarray + k
         else:
             strarray.append(s)
     print()
